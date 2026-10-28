@@ -1,0 +1,116 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0a4a33"><title>Gold Fortune — Admin</title><link rel="icon" href="icon-2.png"><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"><style>
+:root{--green-dk:#052e1f;--green:#0a4a33;--green-md:#0f5c40;--gold:#d4af37;--gold-dk:#a8861f;--royal:#1b44b8;--royal-dk:#12328a;--white:#fff;--line:rgba(212,175,55,.55)}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--green-dk);color:#fff;font-family:'DM Sans',sans-serif}
+button,input,select{font:inherit}
+h1,h2,h3,p,span,div,td,th,label,b,strong,small,li,a{color:#fff}
+/* ---------- login ---------- */
+.login{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 50% 0,var(--royal-dk),transparent 55%),var(--green-dk)}
+.login-box{width:min(410px,100%);background:var(--green);border:2px solid var(--gold);border-radius:22px;padding:32px;box-shadow:0 24px 70px rgba(0,0,0,.5)}
+.login-box h1{font:700 2rem 'Playfair Display',serif;margin:0}
+.login-box p{margin:6px 0 0;opacity:.9}
+label{display:block;font-size:.84rem;font-weight:700;margin:12px 0 6px}
+input,select{width:100%;height:46px;border-radius:11px;border:1.5px solid var(--gold);background:var(--green-dk);color:#fff;padding:0 13px;outline:none}
+input::placeholder{color:rgba(255,255,255,.7)}
+input:focus,select:focus{border-color:#fff;box-shadow:0 0 0 3px rgba(27,68,184,.7)}
+option{background:var(--green-dk);color:#fff}
+.error{font-size:.85rem;margin-top:12px;font-weight:700}
+/* ---------- buttons ---------- */
+.btn{min-height:44px;padding:0 16px;border-radius:11px;border:1.5px solid var(--gold);cursor:pointer;font-weight:800;color:#fff;background:var(--royal);transition:filter .15s}
+.btn:hover{filter:brightness(1.15)}
+.btn.gold{background:var(--gold-dk);border-color:var(--gold);color:#fff}
+.btn.outline{background:transparent;border-color:var(--gold);color:#fff}
+.btn.outline:hover{background:var(--royal)}
+.btn.danger{background:var(--royal-dk);border-color:var(--gold);color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+/* ---------- layout: icon sidebar LEFT (vertical), content RIGHT ---------- */
+.admin{display:none;min-height:100vh;background:var(--green-dk)}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:250px;background:var(--green);border-right:2px solid var(--gold);padding:20px 12px;z-index:20;display:flex;flex-direction:column;overflow-y:auto}
+.brand{font:700 1.35rem 'Playfair Display',serif;padding:0 8px 18px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.nav{display:flex;flex-direction:column;gap:7px;flex:1}
+.nav button,.side-bottom button{width:100%;display:flex;align-items:center;gap:12px;text-align:left;padding:10px 12px;border-radius:12px;border:1.5px solid transparent;background:transparent;color:#fff;cursor:pointer;font-weight:800;min-height:48px}
+.nav button:hover,.side-bottom button:hover{background:var(--royal-dk);border-color:var(--line)}
+.nav button.active{background:var(--royal);border-color:var(--gold);box-shadow:inset 4px 0 0 var(--gold)}
+.nav-icon{flex:0 0 34px;width:34px;height:34px;border-radius:9px;background:var(--green-dk);border:1px solid var(--gold);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:1.05rem}
+.nav button.active .nav-icon{background:var(--gold-dk)}
+.side-bottom{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.main{margin-left:250px;min-height:100vh;background:var(--green-dk)}
+.topbar{position:sticky;top:0;z-index:10;background:var(--green);border-bottom:2px solid var(--gold);padding:14px 26px;display:flex;justify-content:space-between;align-items:center}
+.topbar h1{font:700 1.4rem 'Playfair Display',serif;margin:0}
+.top-actions{display:flex;gap:10px;align-items:center}
+.idle{font-size:.8rem;font-weight:700}
+.content{width:min(1200px,100%);margin:auto;padding:24px}
+.section{display:none}
+.section.active{display:block;animation:fade .2s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.section-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:16px}
+.section-head h2{font:700 1.5rem 'Playfair Display',serif;margin:0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.card,.product,.proof{background:var(--green);border:1.5px solid var(--gold);border-radius:16px;padding:20px;margin-bottom:15px}
+.card:hover{border-color:#fff}
+.stat{font:700 2rem 'Playfair Display',serif}
+.muted{font-size:.85rem;opacity:.92}
+.controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.form-group{margin-bottom:12px}
+.table-wrap{overflow:auto}
+.table{width:100%;border-collapse:collapse;min-width:760px}
+.table th,.table td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:left;font-size:.86rem}
+.table th{font-size:.72rem;text-transform:uppercase;background:var(--royal-dk)}
+.product{padding:16px;background:var(--green-md)}
+.proof-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.proof{padding:14px}
+.proof img{width:100%;height:230px;object-fit:contain;background:var(--green-dk);border:1px solid var(--line);border-radius:12px;margin:10px 0}
+.proof-meta{font-size:.9rem;line-height:1.6}
+.proof-actions{display:flex;gap:8px;flex-wrap:wrap}
+.proof-actions .btn{flex:1;min-width:135px}
+.status{display:inline-block;padding:4px 10px;border-radius:999px;font-size:.72rem;font-weight:800;background:var(--gold-dk);border:1px solid var(--gold)}
+.status.approved,.status.confirmed,.status.reviewed{background:var(--green-md);border-color:#fff}
+.status.declined{background:var(--royal);border-color:var(--gold)}
+.empty{text-align:center;padding:28px;opacity:.9}
+.toast{position:fixed;right:20px;bottom:20px;background:var(--royal);border:2px solid var(--gold);color:#fff;padding:12px 16px;border-radius:12px;z-index:80;display:none;font-weight:800}
+.toast.show{display:block}
+.customer-tools{display:grid;grid-template-columns:1.2fr .8fr 1.5fr auto auto;gap:8px;align-items:end}
+.claim-view{min-width:90px}
+.claim-modal{position:fixed;inset:0;background:rgba(2,20,13,.8);display:none;align-items:center;justify-content:center;padding:18px;z-index:90}
+.claim-modal.show{display:flex}
+.claim-modal-card{width:min(520px,100%);background:var(--green);border:2px solid var(--gold);border-radius:18px;padding:20px}
+.claim-modal-card h3{margin:0 0 10px}
+.product-editor{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.product-editor .full{grid-column:1/-1}
+/* ---------- tablets / phones: sidebar stays on the LEFT, icons only, stacked vertically ---------- */
+@media(max-width:900px){
+  .sidebar{width:68px;padding:14px 8px}
+  .brand{font-size:0;text-align:center;padding:0 0 12px}
+  .brand:after{content:'GF';font:700 1.25rem 'Playfair Display',serif;color:#fff}
+  .nav button,.side-bottom button{justify-content:center;padding:6px;gap:0}
+  .nav button span:last-child,.side-bottom button span:last-child{display:none}
+  .main{margin-left:68px}
+  .grid{grid-template-columns:1fr 1fr}
+  .controls,.customer-tools{grid-template-columns:1fr}
+  .proof-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .topbar{padding:12px 14px}
+  .topbar h1{font-size:1.1rem}
+  .idle{display:none}
+  .content{padding:16px 12px}
+  .grid{grid-template-columns:1fr}
+  .section-head{align-items:flex-start}
+  .login-box{padding:25px 20px}
+  .product-editor{grid-template-columns:1fr}
+  .product-editor .full{grid-column:auto}
+}
+</style>
+</head><body>
+<div class="login" id="loginScreen"><div class="login-box"><h1>Gold Fortune</h1><p>Administrator dashboard</p><form id="loginForm"><label>Username</label><input id="username" autocomplete="username" required><label>Password</label><input id="password" type="password" autocomplete="current-password" required><button class="btn gold" style="width:100%;margin-top:16px" id="loginBtn">Sign In</button><div class="error" id="loginError"></div></form></div></div>
+<div class="admin" id="adminApp"><aside class="sidebar"><div class="brand">Gold Fortune Admin</div><nav class="nav"><button class="active" data-section="overview"><span class="nav-icon">⌂</span><span>Dashboard</span></button><button data-section="settings"><span class="nav-icon">⚙</span><span>Settings</span></button><button data-section="products"><span class="nav-icon">▣</span><span>Products</span></button><button data-section="customers"><span class="nav-icon">♙</span><span>Customers</span></button><button data-section="uploads"><span class="nav-icon">▤</span><span>Payment Uploads</span></button><button data-section="withdrawals"><span class="nav-icon">⇩</span><span>Withdraw Request</span></button><button data-section="codegen"><span class="nav-icon">⌘</span><span>Code Generate</span></button><button data-section="delete"><span class="nav-icon">⌫</span><span>Delete</span></button><button data-section="claims"><span class="nav-icon">✓</span><span>Claim Requests</span></button></nav><div class="side-bottom"><button class="btn outline" onclick="logout()" title="Logout"><span class="nav-icon">⏻</span><span>Logout</span></button></div></aside><main class="main"><header class="topbar"><h1 id="sectionTitle">Dashboard</h1><div class="top-actions"><span class="idle" id="idleTimer">Idle 1:00</span><button class="btn outline" onclick="refreshAll()">Refresh</button></div></header><div class="content">
+<section class="section active" id="section-overview"><div class="section-head"><h2>Dashboard</h2></div><div class="grid"><div class="card"><div class="stat" id="statUsers">0</div><div class="muted">Customers</div></div><div class="card"><div class="stat" id="statUploads">0</div><div class="muted">Payment uploads</div></div><div class="card"><div class="stat" id="statWithdrawals">0</div><div class="muted">Withdrawal requests</div></div></div><div class="card"><b>Admin workspace</b><p class="muted" style="margin-top:7px">Use the icons on the left to switch the content shown on the right. New payment-proof submissions appear under Payment Uploads.</p></div></section>
+<section class="section" id="section-settings"><div class="section-head"><h2>Payment & Contact Settings</h2></div><div class="card"><div class="controls"><div><label>Bank Name</label><input id="bankName"></div><div><label>Account Name</label><input id="accountName"></div></div><label>Account Number</label><input id="bankAccount"><div class="controls" style="margin-top:12px"><div><label>WhatsApp link</label><input id="whatsapp" placeholder="https://wa.me/..."/></div><div><label>Telegram support link</label><input id="telegram" placeholder="https://t.me/..."/></div></div><label>Telegram Channel link</label><input id="telegramChannel" placeholder="https://t.me/..."/><button class="btn gold" style="margin-top:16px" onclick="saveSettings()">Save Settings</button></div><div class="card"><b>Referral code maintenance</b><p class="muted" style="margin:6px 0 12px">Repair missing or duplicate customer referral codes while keeping each customer code unique.</p><button class="btn outline" onclick="repairReferralCodes()">Repair Referral Codes</button></div><div class="card"><b>Change Admin Password</b><label>New password</label><input id="newAdminPassword" type="password" minlength="6" placeholder="Enter new password"><label>Confirm password</label><input id="confirmAdminPassword" type="password" minlength="6" placeholder="Confirm new password"><button class="btn gold" style="margin-top:14px" onclick="changeAdminPassword()">Update Admin Password</button></div></section>
+<section class="section" id="section-products"><div class="section-head"><h2>Products</h2></div><div id="productsList"></div></section>
+<section class="section" id="section-customers"><div class="section-head"><h2>Customers</h2></div><div class="card"><b>Credit / Deduct Customer</b><div class="customer-tools" style="margin-top:12px"><div class="wide"><label>Customer</label><select id="fundCustomer"></select></div><div><label>Amount</label><input id="fundAmount" type="number" min="0" step="1" placeholder="Amount"></div><div class="wide"><label>Memo / Description</label><input id="fundMemo" placeholder="Reason for adjustment"></div><button class="btn gold" onclick="adjustCustomerBalance(1)">Credit</button><button class="btn outline" onclick="adjustCustomerBalance(-1)">Deduct</button></div></div><div class="card table-wrap"><table class="table"><thead><tr><th>Name</th><th>Email</th><th>Customer ID</th><th>Referral</th><th>Joined</th><th>Status</th><th>Balance</th></tr></thead><tbody id="usersBody"></tbody></table></div></section>
+<section class="section" id="section-uploads"><div class="section-head"><h2>Payment Uploads</h2></div><div id="uploadsList" class="proof-grid"></div></section>
+<section class="section" id="section-withdrawals"><div class="section-head"><h2>Withdraw Request</h2><button class="btn outline" onclick="refreshAll()">Refresh Requests</button></div><div class="card table-wrap"><table class="table"><thead><tr><th>User</th><th>Amount</th><th>Bank</th><th>Account</th><th>Account Name</th><th>Status</th><th>Date</th><th>Action</th></tr></thead><tbody id="withdrawalsBody"></tbody></table></div></section>
+<section class="section" id="section-codegen"><div class="section-head"><h2>Code Generate</h2></div><div class="card"><label>Customer</label><select id="codeCustomer"></select><label>Product</label><select id="codeProduct"></select><button class="btn gold" style="margin-top:16px" onclick="generateClaimCode()">Generate & Send Code</button><p class="muted" style="margin-top:10px">Generated codes are assigned to one customer and can be used once.</p></div><div class="card"><div id="generatedCodes"></div></div></section>
+<section class="section" id="section-delete"><div class="section-head"><h2>Delete Customer</h2></div><div class="card"><label>Select customer</label><select id="deleteCustomer"></select><button class="btn danger" style="margin-top:16px" onclick="confirmDeleteCustomer()">Delete</button></div></section>
+<section class="section" id="section-claims"><div class="section-head"><h2>Claim Requests</h2></div><div class="card table-wrap"><table class="table"><thead><tr><th>Customer</th><th>Product</th><th>Code</th><th>Amount</th><th>Status</th><th>Date</th><th>Action</th></tr></thead><tbody id="claimsBody"></tbody></table></div></section>
+</div></main></div><div class="claim-modal" id="claimModal"><div class="claim-modal-card"><h3>Claim Request</h3><div id="claimDetails"></div><div style="display:flex;gap:8px;margin-top:16px"><button class="btn outline" onclick="closeClaimModal()">Close</button><button class="btn gold" id="confirmClaimBtn" onclick="confirmClaimRequest()">Confirm Claim Request</button></div></div></div><div class="toast" id="toast"></div><script src="app.js"></script></body></html>
